@@ -1,0 +1,238 @@
+[
+  {
+    "id_rep": "67c889879116b3d081121adf",
+    "facturas": ["67c88985292cd25f28eadfc0"]
+  },
+  {
+    "id_rep": "67c88f66292cd25f28eb8f30",
+    "facturas": ["67c88f64292cd25f28eb8ea6"]
+  },
+  {
+    "id_rep": "67c89853292cd25f28ecc868",
+    "facturas": ["67c898519116b3d081140969"]
+  },
+  {
+    "id_rep": "67c8a5379116b3d081158fdb",
+    "facturas": ["67c8a535292cd25f28ee47e8"]
+  },
+  {
+    "id_rep": "67c8caf89116b3d0811926b3",
+    "facturas": ["67c8caf59116b3d081192620"]
+  },
+  {
+    "id_rep": "67c8d076292cd25f28f27ef1",
+    "facturas": ["67c8d076292cd25f28f27ef1"]
+  },
+  {
+    "id_rep": "67c8d167292cd25f28f297a3",
+    "facturas": ["67c8d165292cd25f28f296ef"]
+  },
+  {
+    "id_rep": "67c9d03d0b86088bf1287c5d",
+    "facturas": ["67c9d03b2405437c1e89ea05"]
+  },
+  {
+    "id_rep": "67f96ca95d67b4e6734a3e93",
+    "facturas": ["67ca371d6ce2bbf1215f0d32"]
+  },
+  {
+    "id_rep": "67f973315d67b4e6734b02f8",
+    "facturas": ["67c8aff4292cd25f28ef6e74"]
+  },
+  {
+    "id_rep": "67ca199bc46e500d900a4427",
+    "facturas": ["67c8ae9f292cd25f28ef5484"]
+  },
+  {
+    "id_rep": "67f976da6244c0a79958458a",
+    "facturas": ["67c8ae9f292cd25f28ef5484"]
+  },
+  {
+    "id_rep": "67fd72d5acd6a62462675f7c",
+    "facturas": ["67c8e78c9116b3d0811c5361"]
+  },
+  {
+    "id_rep": "67f96f1b5d67b4e6734a920c",
+    "facturas": ["67c8c7a49116b3d08118b477"]
+  },
+  {
+    "id_rep": "67f96f8a6244c0a799576fb0",
+    "facturas": ["67c8c717292cd25f28f15db3"]
+  },
+  {
+    "id_rep": "67f9711b5d67b4e6734acc39",
+    "facturas": ["67cb1bbc6ce2bbf121670cc7"]
+  },
+  {
+    "id_rep": "67cb691969b4acad6ef35ed7",
+    "facturas": ["67cb691669b4acad6ef35e6c"]
+  },
+  {
+    "id_rep": "67cb6d4f69b4acad6ef44f2c",
+    "facturas": ["67cb6d4c69b4acad6ef44e3e"]
+  },
+  {
+    "id_rep": "67fd68a4acd6a62462664a33",
+    "facturas": ["67c9e5711fe9b620b50e4e95"]
+  },
+  {
+    "id_rep": "67d05ce73b50633621d3c5f0",
+    "facturas": ["67d05ce49c00a0b7f9afa550"]
+  },
+  {
+    "id_rep": "67d0ce884813c0701f1016ac",
+    "facturas": ["67d0ce854813c0701f1015d0"]
+  },
+  {
+    "id_rep": "67d21da9d38c47d63c80d8b4",
+    "facturas": ["67d21da6d38c47d63c80d840"]
+  },
+  {
+    "id_rep": "67d30a63e2301d89cbf81ac2",
+    "facturas": ["67d30a61e2301d89cbf81a2f"]
+  },
+  {
+    "id_rep": "67d31328e2301d89cbf90d8f",
+    "facturas": ["67d31324d38c47d63c89e617"]
+  },
+  {
+    "id_rep": "67d3264de2301d89cbfb8d8e",
+    "facturas": ["67d3264be2301d89cbfb8cf5"]
+  },
+  {
+    "id_rep": "67d36360808be76519850eb0",
+    "facturas": ["67d3635d808be76519850e42"]
+  },
+  {
+    "id_rep": "67f970b95d67b4e6734ac2c6",
+    "facturas": ["67d318afd38c47d63c8a8887"]
+  },
+  {
+    "id_rep": "67d9ffaa05fe87f1c97e1ed7",
+    "facturas": ["67d318afd38c47d63c8a8887"]
+  },
+  {
+    "id_rep": "67d9ffec4e507db199dd70ce",
+    "facturas": ["67d318afd38c47d63c8a8887"]
+  },
+  {
+    "id_rep": "67db4b90c3e708c2f499d323",
+    "facturas": ["67c88e31292cd25f28eb6c60"]
+  },
+  {
+    "id_rep": "67dc93a5b126d370db35f053",
+    "facturas": ["67dc37c105fe87f1c99c27f6"]
+  },
+  {
+    "id_rep": "67ddac8d466e3712a245e00c",
+    "facturas": ["67c8ae9f292cd25f28ef5484"]
+  },
+  {
+    "id_rep": "67ddbc39b126d370db4674b3",
+    "facturas": ["67dca599b126d370db37e142"]
+  },
+  {
+    "id_rep": "67ddd923b126d370db4a312f",
+    "facturas": ["67ddd8cf466e3712a24c22e4"]
+  },
+  {
+    "id_rep": "67ded997b3969539699d44e2",
+    "facturas": ["67db49e705fe87f1c9934dcd"]
+  },
+  {
+    "id_rep": "67e45479945af5e26736777f",
+    "facturas": ["67c88ceb9116b3d081129082"]
+  },
+  {
+    "id_rep": "67e57434e961611dbbc1312b",
+    "facturas": ["67ddd8cf466e3712a24c22e4"]
+  },
+  {
+    "id_rep": "67e5a978f4f823d3d97a9701",
+    "facturas": ["67e59e56f4f823d3d9795e07"]
+  },
+  {
+    "id_rep": "67e5a9c1f4f823d3d97a9fb5",
+    "facturas": ["67e59e56f4f823d3d9795e07"]
+  },
+  {
+    "id_rep": "67f975345d67b4e6734b3c81",
+    "facturas": ["67e59e56f4f823d3d9795e07"]
+  },
+  {
+    "id_rep": "67eb26cfbbd0ee02ed2cb5e1",
+    "facturas": ["67db597e05fe87f1c994d3b3"]
+  },
+  {
+    "id_rep": "67eb2706a76597881def1ae9",
+    "facturas": ["67db597e05fe87f1c994d3b3"]
+  },
+  {
+    "id_rep": "67eb29cca76597881def98de",
+    "facturas": ["67eb2968bbd0ee02ed2d30f5"]
+  },
+  {
+    "id_rep": "680ff90c6ebce9aa29c06c0e",
+    "facturas": ["67f7048474432bc4253a180b"]
+  },
+  {
+    "id_rep": "67f6e68a26a99c493e871c45",
+    "facturas": ["67c8ae9f292cd25f28ef5484"]
+  },
+  {
+    "id_rep": "67f704e874432bc4253a22a7",
+    "facturas": ["67f7048474432bc4253a180b"]
+  },
+  {
+    "id_rep": "67f801a19906445e8da09cb1",
+    "facturas": ["67f7fe1274432bc42544ead8"]
+  },
+  {
+    "id_rep": "67f801da9906445e8da0a2c4",
+    "facturas": ["67f7fe1274432bc42544ead8"]
+  },
+  {
+    "id_rep": "67f97f625d67b4e6734c4720",
+    "facturas": ["67f97e486244c0a7995908da"]
+  },
+  {
+    "id_rep": "67fd6648acd6a62462660667",
+    "facturas": ["67f97e486244c0a7995908da"]
+  },
+  {
+    "id_rep": "67fd6696fe8d9127e2dfed8c",
+    "facturas": ["67f462220dc469fe95438611"]
+  },
+  {
+    "id_rep": "67fd66dcfe8d9127e2dff2e7",
+    "facturas": ["67f464230dc469fe9543b0c7"]
+  },
+  {
+    "id_rep": "68000a6b4c23582b2de781a9",
+    "facturas": ["67fd41a0a2783c74323d9b25"]
+  },
+  {
+    "id_rep": "67fff9d4aec9056ee5e7efc9",
+    "facturas": ["67e4968fb6f78580d7c8038c"]
+  },
+  {
+    "id_rep": "6807c702e505d95ffb0f6ad5",
+    "facturas": ["6806d670a58443a41fe500f9"]
+  },
+  {
+    "id_rep": "680c11828ae2c586f797ee00",
+    "facturas": ["67fd49e3d8173393da6fed25"]
+  },
+  {
+    "id_rep": "680d10aa9fae15a86127a6e4",
+    "facturas": ["67f83eb0d9e49e138269fb5f"]
+  },
+  {
+    "id_rep": "68100ff997f889d06312d3e5",
+    "facturas": ["680d36a08ae2c586f7a306d5"]
+  },
+  {
+    "id_rep": "6812bda898814aeb673403ec",
+    "facturas": ["68115ecfe134ba8940e9713c"]
+  }
+]
