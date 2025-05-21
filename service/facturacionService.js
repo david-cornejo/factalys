@@ -18,32 +18,6 @@ class facturacionServicios {
     const invoice = await facturapi.invoices.create(data);
     return invoice;
   }
-
-  // async newFactureDB(data, asesores = []) {
-  //   let atendida = false;
-  //   if (
-  //     data.estadoDePago === 'SP' ||
-  //     data.estadoDePago === 'VP' ||
-  //     data.estadoDePago === 'REP' ||
-  //     data.estadoDePago === 'NC' ||
-  //     data.estadoDePago === 'PDC'
-  //   ) {
-  //     atendida = true;
-  //   }
-  //   const result = await models.Facturacion.create({ ...data, atendida });
-
-  //   if (asesores.length > 0) {
-  //     const asesoresRelacionados = await models.Asesor.findAll({
-  //       where: {
-  //         id_asesor: asesores,
-  //       },
-  //     });
-
-  //     await result.addAsesores(asesoresRelacionados);
-  //   }
-
-  //   return result;
-  // }
   
   async newDocumentoDB(data, asesores = [], id_factura_origen = null, fecha_pago = null) {
     const {
@@ -167,33 +141,33 @@ class facturacionServicios {
 
   async cancelarFactura(id, motive) {
     try {
-      // // 🔹 1. Cancelar la factura en Facturapi
-      // const cancelledFacture = await facturapi.invoices.cancel(id, { motive });
+      // 🔹 1. Cancelar la factura en Facturapi
+      const cancelledFacture = await facturapi.invoices.cancel(id, { motive });
 
-      // let cancelledFactureDB;
-      // switch (cancelledFacture.type) {
-      //   case 'E':
-      //     cancelledFactureDB = await models.NotaCredito.findOne({
-      //       where: { id_facturacion: id },
-      //     });
-      //     break;
-      //   case 'P':
-      //     cancelledFactureDB = await models.Rep.findOne({
-      //       where: { id_facturacion: id },
-      //     });
-      //     break;
-      //   case 'I':
-      //     cancelledFactureDB = await models.Facturacion.findOne({
-      //       where: { id_facturacion: id },
-      //     });
-      //     break;
-      //   default:
-      //     throw new Error(`Tipo de factura no válido: ${cancelledFacture.type}`);
-      // }
+      let cancelledFactureDB;
+      switch (cancelledFacture.type) {
+        case 'E':
+          cancelledFactureDB = await models.NotaCredito.findOne({
+            where: { id_facturacion: id },
+          });
+          break;
+        case 'P':
+          cancelledFactureDB = await models.Rep.findOne({
+            where: { id_facturacion: id },
+          });
+          break;
+        case 'I':
+          cancelledFactureDB = await models.Facturacion.findOne({
+            where: { id_facturacion: id },
+          });
+          break;
+        default:
+          throw new Error(`Tipo de factura no válido: ${cancelledFacture.type}`);
+      }
 
-      // if (!cancelledFactureDB) {
-      //   throw new Error(`No se encontró la factura en la base de datos: ${id}`);
-      // }
+      if (!cancelledFactureDB) {
+        throw new Error(`No se encontró la factura en la base de datos: ${id}`);
+      }
 
       // 🔹 2. Descargar los nuevos archivos de la factura cancelada
       const pdfBuffer = await this.downloadFacturePdf(id);
@@ -210,33 +184,33 @@ class facturacionServicios {
         { where: { id_factura: id } }
       );
 
-      // // 🔹 4. Actualizar el estado de la factura y sus pagos relacionados
-      // const estadoDePago = cancelledFactureDB.estadoDePago;
-      // if (['SP', 'VP'].includes(estadoDePago)) {
-      //   await models.Facturacion.update(
-      //     { estado: 'cancelada' },
-      //     { where: { id_facturacion: id } }
-      //   );
-      //   await models.Pago.update(
-      //     { estado: 'cancelada' },
-      //     { where: { id_factura: id } }
-      //   );
-      // } else if (['VN', 'SN'].includes(estadoDePago)) {
-      //   await models.Facturacion.update(
-      //     { estado: 'cancelada' },
-      //     { where: { id_facturacion: id } }
-      //   );
-      // } else if (['REP'].includes(estadoDePago)) {
-      //   await models.Rep.update(
-      //     { estado: 'cancelada' },
-      //     { where: { id_facturacion: id } }
-      //   );
-      // } else if (['NC'].includes(estadoDePago)) {
-      //   await models.NotaCredito.update(
-      //     { estado: 'cancelada' },
-      //     { where: { id_facturacion: id } }
-      //   );
-      // }
+      // 🔹 4. Actualizar el estado de la factura y sus pagos relacionados
+      const estadoDePago = cancelledFactureDB.estadoDePago;
+      if (['SP', 'VP'].includes(estadoDePago)) {
+        await models.Facturacion.update(
+          { estado: 'cancelada' },
+          { where: { id_facturacion: id } }
+        );
+        await models.Pago.update(
+          { estado: 'cancelada' },
+          { where: { id_factura: id } }
+        );
+      } else if (['VN', 'SN'].includes(estadoDePago)) {
+        await models.Facturacion.update(
+          { estado: 'cancelada' },
+          { where: { id_facturacion: id } }
+        );
+      } else if (['REP'].includes(estadoDePago)) {
+        await models.Rep.update(
+          { estado: 'cancelada' },
+          { where: { id_facturacion: id } }
+        );
+      } else if (['NC'].includes(estadoDePago)) {
+        await models.NotaCredito.update(
+          { estado: 'cancelada' },
+          { where: { id_facturacion: id } }
+        );
+      }
 
       return {
         message: 'Factura cancelada y archivos actualizados',

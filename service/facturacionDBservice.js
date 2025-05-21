@@ -1,5 +1,5 @@
 const { models } = require('../libs/sequelize');
-const { Op, where } = require('sequelize');
+const { Op, where, literal, fn, col } = require('sequelize');
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const path = require('path');
@@ -1281,6 +1281,155 @@ class FacturaEstadoServicios {
       cargos: data.cargos,
       abonos: data.abonos,
       saldo: data.cargos - data.abonos,
+    }));
+  }
+  async calcularTotalesFacturacionYCobranzaDB({ serieSucursal }) {
+    // Fechas para mes actual
+    const ahora = moment.tz('America/Mexico_City');
+    const inicioMes = ahora.clone().startOf('month').toDate();
+    const finMes    = ahora.clone().endOf('month').toDate();
+
+    // Base del WHERE
+    const whereBase = {};
+    if (serieSucursal !== 'COR') {
+      whereBase.serieSucursal = serieSucursal;
+    }
+
+    // Estados que consideramos "cobrados"
+    const paidStates = ['VP','SP','REP','NC'];
+
+    // 1) Total facturado histórico
+    const histFact = await models.Facturacion.findOne({
+      attributes: [[ fn('sum', col('total')), 'valor' ]],
+      where: whereBase
+    });
+    // 2) Total cobrado histórico
+    const histCob = await models.Facturacion.findOne({
+      attributes: [[ fn('sum', col('total')), 'valor' ]],
+      where: {
+        ...whereBase,
+        estadoDePago: { [Op.in]: paidStates }
+      }
+    });
+    // 3) Total facturado mes actual
+    const mesFact = await models.Facturacion.findOne({
+      attributes: [[ fn('sum', col('total')), 'valor' ]],
+      where: {
+        ...whereBase,
+        fecha_emision: { [Op.between]: [inicioMes, finMes] }
+      }
+    });
+    // 4) Total cobrado mes actual
+    const mesCob = await models.Facturacion.findOne({
+      attributes: [[ fn('sum', col('total')), 'valor' ]],
+      where: {
+        ...whereBase,
+        estadoDePago:    { [Op.in]: paidStates },
+        fecha_emision:   { [Op.between]: [inicioMes, finMes] }
+      }
+    });
+
+    const toNum = r => parseFloat(r?.get('valor') || 0);
+
+    return {
+      facturado: {
+        historico: toNum(histFact),
+        mensual:   toNum(mesFact)
+      },
+      cobrado: {
+        historico: toNum(histCob),
+        mensual:   toNum(mesCob)
+      }
+    };
+  }
+
+    async totalesGraficasDB({ fechaInicio, fechaFin, serieSucursal }) {
+    // 1) Armar WHERE base
+    const whereBase = {};
+    if (fechaInicio && fechaFin) {
+      const start = moment
+        .tz(fechaInicio, 'YYYY-MM-DD', 'America/Mexico_City')
+        .startOf('day')
+        .toDate();
+      const end = moment
+        .tz(fechaFin, 'YYYY-MM-DD', 'America/Mexico_City')
+        .endOf('day')
+        .toDate();
+      whereBase.fecha_emision = { [Op.between]: [start, end] };
+    }
+    if (serieSucursal && serieSucursal !== 'COR') {
+      whereBase.serieSucursal = serieSucursal;
+    }
+
+    // 2) Ejecutar query agrupando por mes (casteando VARCHAR→TIMESTAMPTZ)
+    const rows = await models.Facturacion.findAll({
+      attributes: [
+        // date_trunc sobre el casteo de la columna
+        [ literal(`date_trunc('month', fecha_emision::timestamptz)`), 'mes' ],
+        [ fn('sum', col('total')), 'facturado' ],
+        [ fn('sum', literal(`
+          CASE
+            WHEN "estadoDePago" IN ('VP','SP','REP','NC') THEN "total"
+            ELSE 0
+          END
+        `)), 'cobrado' ],
+      ],
+      where: whereBase,
+      group:   [ literal(`date_trunc('month', fecha_emision::timestamptz)`) ],
+      order:   [ [ literal(`date_trunc('month', fecha_emision::timestamptz)`), 'ASC' ] ],
+      raw:     true,  // nos devuelve objetos planos en lugar de instancias
+    });
+
+    // 3) Mapear a la forma que necesitas
+    const mesesNombres = [
+      "January","February","March","April","May","June",
+      "July","August","September","October","November","December"
+    ];
+
+    return rows.map(r => {
+      const dateMes = new Date(r.mes);
+      return {
+        month:   mesesNombres[dateMes.getMonth()],
+        desktop: parseFloat(parseFloat(r.facturado).toFixed(2)),
+        mobile:  parseFloat(parseFloat(r.cobrado).toFixed(2)),
+      };
+    });
+  }
+   async dataPrediccionGraficasDB({ fechaInicio, fechaFin } = {}) {
+    // 1) Filtro base
+    const where = { id_empresa: 1 };
+
+    // 2) Si llega rango de fechas, aplicarlo sobre fecha_actualizacion
+    if (fechaInicio || fechaFin) {
+      where.fecha_actualizacion = {};
+      if (fechaInicio) where.fecha_actualizacion[Op.gte] = new Date(fechaInicio);
+      if (fechaFin)   where.fecha_actualizacion[Op.lte] = new Date(fechaFin);
+    }
+
+    // 3) Agrupar y sumar real vs predicho
+    const rows = await models.Prediccion.findAll({
+      attributes: [
+        'anio',
+        'mes',
+        [ fn('SUM', col('monto_real')),     'real'     ],
+        [ fn('SUM', col('monto_predicho')), 'predicho' ]
+      ],
+      where,
+      group: ['anio','mes'],
+      order: [['anio','ASC'],['mes','ASC']],
+      raw: true
+    });
+
+    // 4) Mapear al formato requerido
+    const monthNames = [
+      "January","February","March","April","May","June",
+      "July","August","September","October","November","December"
+    ];
+
+    return rows.map(r => ({
+      month:   monthNames[r.mes - 1],
+      desktop: parseFloat((r.real || 0).toFixed(2)),
+      mobile:  parseFloat((r.predicho || 0).toFixed(2))
     }));
   }
 }

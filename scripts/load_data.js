@@ -16,7 +16,7 @@ const { models, sequelize } = require('../libs/sequelize');
     console.log('🔌 Conexión a BD establecida.');
 
     // 2) Leer CSV y agregar ventas diarias a nivel mensual
-    const filePath = path.resolve(__dirname, '../assets/ventas_2015-2024.csv');
+    const filePath = path.resolve(__dirname, '../assets/ventas_mensuales.csv');
     const monthlyData = {};
 
     fs.createReadStream(filePath)

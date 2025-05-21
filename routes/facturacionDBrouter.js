@@ -317,4 +317,60 @@ router.get('/saldos-clientes', async (req, res) => {
   }
 });
 
+router.get(
+  '/total-db',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('super', 'corporativo', 'sucursal'),
+  async (req, res) => {
+    try {
+      const decoded = decodeToken(req.headers.authorization);
+      const serieSucursal = decoded.clave; // tu campo de sucursal en el token
+
+      const totals = await servicios.calcularTotalesFacturacionYCobranzaDB({ serieSucursal });
+      res.status(200).json(totals);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+router.get(
+  '/totales-graficas-db',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('super', 'corporativo', 'sucursal'),
+  async (req, res) => {
+    try {
+      const decoded = decodeToken(req.headers.authorization);
+      const serieSucursal = decoded.clave;
+
+      const { fechaInicio, fechaFin } = req.query;
+      const chartData = await servicios.totalesGraficasDB({
+        fechaInicio,
+        fechaFin,
+        serieSucursal
+      });
+      res.status(200).json(chartData);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+router.get(
+  '/data-prediccion',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('super','corporativo','sucursal'),
+  async (req, res) => {
+    try {
+      decodeToken(req.headers.authorization); // solo para validar token
+      const { fechaInicio, fechaFin } = req.query;
+      const data = await servicios.dataPrediccionGraficasDB({ fechaInicio, fechaFin });
+      res.json(data);
+    } catch (err) {
+      console.error('Error en /data-prediccion:', err);
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
+
 module.exports = router;
