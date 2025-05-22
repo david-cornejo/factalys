@@ -14,22 +14,22 @@ router.post(
       const user = req.user;
       const { token } = service.singToken(user);
 
-      res.cookie('authToken', token, {
-        httpOnly: false, // Si quieres que sea accesible desde JS, usa `false`
-        secure: process.env.COOKIE_SECURE, // Solo en HTTPS en producción
-        sameSite: 'None', // Protección contra CSRF
-        domain: process.env.COOKIE_DOMAIN, // Dominio de la cookie
-        path: '/', // Ruta de la cookie
-      });
-
-
       // res.cookie('authToken', token, {
-      //   httpOnly: false, // Accesible desde JS
-      //   secure: false, // No requiere HTTPS en local
-      //   sameSite: 'Lax', // Protección básica contra CSRF
-      //   domain: 'localhost', // Dominio para pruebas locales
+      //   httpOnly: false, // Si quieres que sea accesible desde JS, usa `false`
+      //   secure: process.env.COOKIE_SECURE, // Solo en HTTPS en producción
+      //   sameSite: 'None', // Protección contra CSRF
+      //   domain: process.env.COOKIE_DOMAIN, // Dominio de la cookie
       //   path: '/', // Ruta de la cookie
       // });
+
+
+      res.cookie('authToken', token, {
+        httpOnly: false, // Accesible desde JS
+        secure: false, // No requiere HTTPS en local
+        sameSite: 'Lax', // Protección básica contra CSRF
+        domain: 'localhost', // Dominio para pruebas locales
+        path: '/', // Ruta de la cookie
+      });
 
       res.status(200).json({
         message: 'Inicio de sesión exitoso',

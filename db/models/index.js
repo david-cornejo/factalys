@@ -1,7 +1,7 @@
 const { Empresa, EmpresaSchema } = require('./../models/empresaModel');
 const { Clientes, ClientesSchema } = require('./../models/clientesModel');
 const { Sucursal, SucursalSchema } = require('./../models/sucursalModel');
-const { Usuario, UsuarioSchema } = require('./../models/usuarioModel');
+const { Usuario, UsucarioSchema } = require('./../models/usuarioModel');
 const { Servicios, ServiciosSchema } = require('./../models/serviciosModel');
 const { Producto, ProductoSchema } = require('./../models/productoModel');
 const { Facturacion, FacturacionSchema } = require('./../models/facturacion');
@@ -23,7 +23,7 @@ function setupModels(sequelize) {
   Empresa.init(EmpresaSchema, Empresa.config(sequelize));
   Clientes.init(ClientesSchema, Clientes.config(sequelize));
   Sucursal.init(SucursalSchema, Sucursal.config(sequelize));
-  Usuario.init(UsuarioSchema, Usuario.config(sequelize));
+  Usuario.init(UsucarioSchema, Usuario.config(sequelize));
   Servicios.init(ServiciosSchema, Servicios.config(sequelize));
   Producto.init(ProductoSchema, Producto.config(sequelize));
   DomicilioFiscal.init(DomicilioFiscalSchema, DomicilioFiscal.config(sequelize));
