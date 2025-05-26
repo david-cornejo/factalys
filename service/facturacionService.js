@@ -787,7 +787,7 @@ class facturacionServicios {
     // === 7) LEYENDA FINAL (PAR DE FILAS ABAJO) ===
     currentRow += 2;
     const leyendaRow = worksheet.getRow(currentRow);
-    leyendaRow.getCell(1).value = `Generado en Timbrela® el: ${moment()
+    leyendaRow.getCell(1).value = `Generado en Factalys el: ${moment()
       .parseZone()
       .format('DD-MM-YYYY HH:mm')} GMT-6`;
     leyendaRow.getCell(1).font = { italic: true, color: { argb: 'FF666666' } };

@@ -169,9 +169,9 @@ class clientesServicios {
 
     // Correo de bienvenida al cliente
     const correoCliente = {
-      from: `"Soporte Timbrela" <${config.email}>`,
+      from: `"Soporte Factalys" <${config.email}>`,
       to: correo,
-      subject: '¡Gracias por tu interés en Timbrela!',
+      subject: '¡Gracias por tu interés en Factalys!',
       html: `
       <div
         style="
@@ -184,10 +184,9 @@ class clientesServicios {
           border-top-right-radius: 10px;
         "
       >
-        <p style="color: white">Timbrela</p>
+        <p style="color: white">Factalys</p>
       </div>
       <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 10px;">
-        <img src="https://iili.io/3YPEEX4.md.png" alt="Timbrela Logo" style="width: 150px; display: block; margin: 0 auto 20px;" />
         <h2 style="text-align: center; color: #22c55e;">¡Hola ${nombre}!</h2>
         <p
           style="
@@ -208,31 +207,29 @@ class clientesServicios {
         </p>
         <p style="text-align: center; color: #737373">
           Si tienes dudas, escríbenos a
-          <a href="soporte@timbrela.com" style="color: #22c55e"
-            >soporte@timbrela.com</a
+          <a href="soporte@factalys.com" style="color: #22c55e"
+            >soporte@factalys.com</a
           >
         </p>
-        <p style="text-align: center; color: #737373">Saludos, Timbrela</p>
-        <p style="text-align: center; color: #737373">© 2025 Timbrela.</p>
+        <p style="text-align: center; color: #737373">Saludos, Factalys</p>
+        <p style="text-align: center; color: #737373">© 2025 Factalys.</p>
       </div>
       `,
     };
 
     // Correo al equipo interno
     const correoInterno = {
-      from: `"Soporte Timbrela" <${config.email}>`,
+      from: `"Soporte Factalys" <${config.email}>`,
       to: 'davidcg914@gmail.com', // Aquí va el correo del área de atención
-      subject: '¡Nuevo cliente interesado en Timbrela! 🛎️',
+      subject: '¡Nuevo cliente interesado en Factalys! 🛎️',
       html: `
       <div style="font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; padding: 30px; border-radius: 10px; border: 1px solid #e5e5e5;">
-        <div style="text-align: center; margin-bottom: 20px;">
-          <img src="https://iili.io/3YPEEX4.md.png" alt="Logo Timbrela" style="width: 120px;" />
-        </div>
+    
 
         <h2 style="text-align: center; color: #2a4d69;">Nuevo interesado registrado</h2>
 
         <p style="font-size: 16px; color: #333; text-align: center;">
-          Un nuevo posible cliente se ha registrado en Timbrela. Aquí tienes los datos:
+          Un nuevo posible cliente se ha registrado en Factalys. Aquí tienes los datos:
         </p>
 
         <div style="margin: 25px auto; padding: 20px; background-color: #ffffff; border: 1px solid #ddd; border-radius: 8px; max-width: 500px;">
@@ -245,7 +242,7 @@ class clientesServicios {
           Por favor, realiza el seguimiento correspondiente.
         </p>
 
-        <p style="font-size: 12px; color: #aaa; text-align: center; margin-top: 30px;">© 2025 Timbrela</p>
+        <p style="font-size: 12px; color: #aaa; text-align: center; margin-top: 30px;">© 2025 Factalys</p>
       </div>
       `,
     };

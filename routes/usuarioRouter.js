@@ -48,8 +48,8 @@ router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   checkRoles('super'),
-  checkSchema(createUsuarioSchema), // Validaciones para crear usuario
-  validateRequest, // Middleware para manejar errores de validación
+  checkSchema(createUsuarioSchema), 
+  validateRequest, 
   async (req, res) => {
     try {
       const body = req.body;
@@ -65,8 +65,8 @@ router.post(
 router.patch(
   '/:token',
   passport.authenticate('jwt', { session: false }),
-  checkSchema(updateUsuarioSchema), // Validaciones para actualizar usuario
-  validateRequest, // Middleware para manejar errores de validación
+  checkSchema(updateUsuarioSchema), 
+  validateRequest,
   async (req, res) => {
     try {
       const { token } = req.params;
@@ -84,8 +84,8 @@ router.patch(
   '/sucursal/:id',
   passport.authenticate('jwt', { session: false }),
   checkRoles('super'),
-  checkSchema(updateUsuarioSchema), // Aplicamos validaciones para asegurar consistencia
-  validateRequest, // Middleware para manejar errores de validación
+  checkSchema(updateUsuarioSchema), 
+  validateRequest, 
   async (req, res) => {
     try {
       const { id } = req.params;

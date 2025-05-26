@@ -37,9 +37,9 @@ const { models, sequelize } = require('../libs/sequelize');
         const registros = Object.values(monthlyData).map(item => ({
           anio: item.anio,
           mes: item.mes,
-          monto_predicho: null,          // si ya hay predicciones, se conservan
+          monto_predicho: null,         
           monto_real: item.suma,
-          desviacion: null,              // se calculará luego
+          desviacion: null,             
           fecha_actualizacion: ahora,
           id_empresa: 1,
           createdAt: ahora,

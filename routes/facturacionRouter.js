@@ -85,7 +85,6 @@ router.post(
       await servicios.crearPDF(nuevaFactura.id);
       await servicios.crearXML(nuevaFactura.id);
 
-      // Si es SP o VP, crear automáticamente su documento de pago (PDC)
       if (body.otros.estado === 'SP' || body.otros.estado === 'VP') {
         const pagoPDC = await servicios.newDocumentoDB(
           {
@@ -104,7 +103,7 @@ router.post(
             id_usuario_creador: body.otros.id_usuario_creador,
           },
           [],
-          nuevaFactura.id // relación con la factura principal
+          nuevaFactura.id 
         );
 
         await serviciosDB.crearPDFPagoCliente({
@@ -201,7 +200,6 @@ router.post(
           .json({ error: 'El ID del documento es obligatorio' });
       }
 
-      // 🔹 Obtener el PDF desde la base de datos
       const { pdf } = await serviciosDB.obtenerArchivosFacturaDB(id);
 
       if (!pdf) {
@@ -216,7 +214,6 @@ router.post(
         `inline; filename=factura_${id}.pdf`
       );
 
-      // 🔹 Enviar el blob del PDF directamente como en el preview original
       res.send(pdf);
     } catch (error) {
       console.error('Error al previsualizar el PDF:', error);
@@ -389,18 +386,15 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   checkRoles('super', 'corporativo', 'sucursal'),
   async (req, res) => {
-    const { id, emails } = req.body; // Recibimos el ID de la factura y el array de emails
+    const { id, emails } = req.body; 
 
     try {
-      // Validar que `emails` sea un array con al menos un correo
       if (!Array.isArray(emails) || emails.length === 0) {
         return res.status(400).json({
           error:
             'Se debe proporcionar al menos un correo electrónico válido en el array "emails"',
         });
       }
-
-      // Llamamos al servicio con el array de emails
       const emailResponse = await servicios.sendEmailFacure(id, emails);
 
       res.status(200).json({ message: 'Email enviado', data: emailResponse });
@@ -472,8 +466,6 @@ router.get(
 
       const {id, fechaInicio, fechaFin } = req.query;
 
-
-      // Buscar al cliente por id_facturapi
       const cliente = await models.Clientes.findOne({
         where: { id_facturapi: id },
       });
@@ -482,7 +474,6 @@ router.get(
         return res.status(404).json({ error: 'Cliente no encontrado' });
       }
 
-      // Buscar facturas usando el id_cliente interno
       const facturas = await serviciosDB.findFacturesByDBFilters({
         idCliente: cliente.id_cliente,
         fechaInicio,
@@ -493,7 +484,6 @@ router.get(
         (factura) => factura.estado !== 'cancelada'
       );
 
-      // Obtener los datos del cliente desde Facturapi
       const clienteFacturapiData = await serviciosClientes.buscarUnoFacturapi(id);
 
       const excelBuffer = await servicios.generarEstadoDeCuentaExcel(
@@ -533,14 +523,12 @@ router.get(
           .json({ error: 'No se pudo obtener el acuse de cancelación' });
       }
 
-      // Configurar cabeceras para enviar el archivo PDF
       res.setHeader('Content-Type', 'application/pdf');
       res.setHeader(
         'Content-Disposition',
         `attachment; filename=acuse_cancelacion_${id}.pdf`
       );
 
-      // Enviar el buffer como respuesta
       res.send(pdfBuffer);
     } catch (error) {
       console.error('Error al generar acuse de cancelación:', error);

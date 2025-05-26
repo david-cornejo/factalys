@@ -14,29 +14,26 @@ router.get(
   checkRoles('super', 'corporativo', 'sucursal'),
   async (req, res) => {
     try {
-      // Obtener y decodificar el token
       const decodedToken = decodeToken(req.headers['authorization']);
-      const serieSucursalFromToken = decodedToken.clave; // Asegúrate de que el token tenga este campo
-      
-      // Obtener los filtros de la query
+      const serieSucursalFromToken = decodedToken.clave; 
+    
       const {
         rfcCliente,
         fechaInicio,
         fechaFin,
         tipos,
         estadosPago,
-        serieSucursal, // Este puede ser opcional si viene del token
+        serieSucursal,
         customer,
       } = req.query;
 
-      // Construir los filtros
       const filters = {
         rfcCliente,
         fechaInicio,
         fechaFin,
         tipos: tipos ? tipos.split(',') : [],
         estadosPago: estadosPago ? estadosPago.split(',') : [],
-        serieSucursal: serieSucursal ? serieSucursal.split(',') : [serieSucursalFromToken], // Convertir a array
+        serieSucursal: serieSucursal ? serieSucursal.split(',') : [serieSucursalFromToken], 
         customer,
       };
 
@@ -58,13 +55,13 @@ router.get(
       const { fechaInicio, fechaFin, estadosPago, rfcCliente, serieSucursal } = req.query;
 
       const decodedToken = decodeToken(req.headers['authorization']);
-      const serieSucursalFromToken = decodedToken.clave; // Asegúrate de que el token tenga este campo
+      const serieSucursalFromToken = decodedToken.clave; 
 
       const filters = {
         fechaInicio,
         fechaFin,
         estadosPago: estadosPago ? estadosPago.split(',') : [],
-        serieSucursal: serieSucursal ? serieSucursal.split(',') : [serieSucursalFromToken], // Convertir a array
+        serieSucursal: serieSucursal ? serieSucursal.split(',') : [serieSucursalFromToken], 
         rfcCliente,
       };
 
@@ -100,14 +97,14 @@ router.get(
     try {
       const { fechaInicio, fechaFin, estadosPago, rfcCliente, serieSucursal } = req.query;
       const decodedToken = decodeToken(req.headers['authorization']);
-      const serieSucursalFromToken = decodedToken.clave; // Asegúrate de que el token tenga este campo
+      const serieSucursalFromToken = decodedToken.clave; 
 
       const excelBuffer = await servicios.generarReporteGlobalExcel({
         fechaInicio,
         fechaFin,
         estadosPago,
         rfcCliente,
-        serieSucursal: serieSucursal ? serieSucursal.split(',') : [serieSucursalFromToken], // Convertir a array
+        serieSucursal: serieSucursal ? serieSucursal.split(',') : [serieSucursalFromToken], 
       });
 
       res.setHeader(
@@ -142,14 +139,12 @@ router.put(
   }
 );
 
-// Nueva ruta para crear la Factura PDC en la BD y luego generar el PDF
 router.post(
   '/crearPago',
   passport.authenticate('jwt', { session: false }),
   checkRoles('super', 'corporativo', 'sucursal'),
   async (req, res) => {
     try {
-      // 1) Extraer datos del body
       const {
         id_facturacion,
         fecha_emision,
@@ -164,19 +159,17 @@ router.post(
         fecha_inicio,
         fecha_fin,
         id_usuario_creador,
-        // Para el PDF
         cliente,
         fecha_pago,
         monto,
         documentos,
       } = req.body;
 
-      // 2) Crear la factura en la BD (PDC)
       const facturaPDC = await serviciosFact.newFactureDB({
         fecha_emision,
         total,
         tipo_factura,
-        id_facturacion, // Ej: `PDC1234` o lo que tengas
+        id_facturacion, 
         folio,
         id_cliente,
         estadoDePago,
@@ -188,8 +181,6 @@ router.post(
         id_usuario_creador,
       });
 
-      // 3) Generar y GUARDAR el PDF en la BD
-      //    (usa la misma lógica que tu ejemplo “asingPDC”)
       await servicios.crearPDFPagoCliente({
         id_factura: facturaPDC.id_facturacion,
         cliente: {
@@ -203,7 +194,6 @@ router.post(
         documentos,
       });
 
-      // 4) Respuesta
       res.status(201).json({
         message: 'Factura PDC creada y PDF de pago almacenado con éxito.',
         facturaPDC,
@@ -215,14 +205,12 @@ router.post(
   }
 );
 
-// Nueva ruta para generar solo el PDF correspondiente al pago
 router.post(
   '/generarPDFPago',
   passport.authenticate('jwt', { session: false }),
   checkRoles('super', 'corporativo', 'sucursal'),
   async (req, res) => {
     try {
-      // Extraer datos del body
       const {
         id_factura,
         cliente,
@@ -233,7 +221,6 @@ router.post(
         documentos,
       } = req.body;
 
-      // Generar y GUARDAR el PDF en la BD
       await servicios.crearPDFPagoCliente({
         id_factura,
         cliente: {
@@ -247,7 +234,6 @@ router.post(
         documentos,
       });
 
-      // Respuesta
       res.status(201).json({
         message: 'PDF de pago generado y almacenado con éxito.',
       });
@@ -324,7 +310,7 @@ router.get(
   async (req, res) => {
     try {
       const decoded = decodeToken(req.headers.authorization);
-      const serieSucursal = decoded.clave; // tu campo de sucursal en el token
+      const serieSucursal = decoded.clave; 
 
       const totals = await servicios.calcularTotalesFacturacionYCobranzaDB({ serieSucursal });
       res.status(200).json(totals);
@@ -362,7 +348,7 @@ router.get(
   checkRoles('super','corporativo','sucursal'),
   async (req, res) => {
     try {
-      decodeToken(req.headers.authorization); // solo para validar token
+      decodeToken(req.headers.authorization); 
       const { fechaInicio, fechaFin } = req.query;
       const data = await servicios.dataPrediccionGraficasDB({ fechaInicio, fechaFin });
       res.json(data);

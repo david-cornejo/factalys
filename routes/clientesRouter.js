@@ -146,8 +146,8 @@ router.patch(
   checkSchema(updateClienteSchema),
   validateRequest,
   async (req, res) => {
-    const { id } = req.params; // id de Facturapi recibido en la petición
-    const body = req.body; // Se espera que el body contenga email_cliente y/o telefono_cliente
+    const { id } = req.params; 
+    const body = req.body; 
     try {
       const clienteActualizado = await servicios.actualizarDatosPorFacturapi(
         id,

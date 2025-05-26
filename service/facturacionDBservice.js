@@ -233,19 +233,8 @@ class FacturaEstadoServicios {
       doc.on('data', (chunk) => buffers.push(chunk));
       doc.on('end', () => resolve(Buffer.concat(buffers)));
 
-      const logoPathLeft = path.resolve(__dirname, '../assets/logoSM8.png');
       const headerHeight = 90;
-
-      if (fs.existsSync(logoPathLeft)) {
-        doc.image(
-          logoPathLeft,
-          doc.page.margins.left + 5,
-          doc.page.margins.top + 10,
-          { width: 80 }
-        );
-      } else {
-        console.warn(`No se encontró el logo izquierdo en: ${logoPathLeft}`);
-      }
+  
 
       doc
         .fontSize(18)
@@ -322,7 +311,7 @@ class FacturaEstadoServicios {
         doc
           .save()
           .rect(tableX, startY, totalTableWidth, headerRowHeight)
-          .fill('#2A4D69')
+          .fill('#53008c')
           .restore();
 
         doc.font('Helvetica-Bold').fontSize(10).fillColor('#FFFFFF');
@@ -338,7 +327,7 @@ class FacturaEstadoServicios {
         doc
           .moveTo(tableX, startY + headerRowHeight)
           .lineTo(tableX + totalTableWidth, startY + headerRowHeight)
-          .strokeColor('#2A4D69')
+          .strokeColor('#53008c')
           .stroke();
 
         return startY + headerRowHeight;
@@ -496,7 +485,7 @@ class FacturaEstadoServicios {
 
       doc.fontSize(10).font('Helvetica').fillColor('#000000');
       doc.text(
-        `Generado en Timbrela ® el: ${moment().utcOffset('-06:00').format('DD/MM/YYYY HH:mm:ss')}`,
+        `Generado en Factalys ® el: ${moment().utcOffset('-06:00').format('DD/MM/YYYY HH:mm:ss')}`,
         doc.page.margins.left,
         footerTextY,
         { width: footerWidth, align: 'right' }
@@ -560,19 +549,9 @@ class FacturaEstadoServicios {
       right: { style: 'thin' },
     };
 
-    // 1) Logo grande en A1:A3, tal como en tu primer ejemplo
-    const logoPath = path.resolve(
-      __dirname,
-      '../assets/Logo Horizonta con fondo.png'
-    );
-    const logoId = workbook.addImage({ filename: logoPath, extension: 'png' });
     // Fusionamos solo A1:A3 (una sola celda)
     worksheet.mergeCells('A1:A3');
-    // Ubicamos la imagen de col=0 a col=1 => ocupa solamente la columna A “completa”
-    worksheet.addImage(logoId, {
-      tl: { col: 0, row: 0 },
-      br: { col: 1, row: 3 },
-    });
+
 
     const row1 = worksheet.getRow(1);
     row1.values = ['', 'REPORTE GLOBAL DE FACTURACIÓN'];
@@ -649,7 +628,7 @@ class FacturaEstadoServicios {
       cell.fill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: { argb: 'FF2A4D69' },
+        fgColor: { argb: '53008c' },
       };
       cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
       cell.alignment = { horizontal: 'center', vertical: 'middle' };
@@ -670,7 +649,7 @@ class FacturaEstadoServicios {
       cell.fill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: { argb: 'FF2A4D69' },
+        fgColor: { argb: '53008c' },
       };
       cell.font = { color: { argb: 'FFFFFFFF' }, bold: true };
       cell.alignment = {
@@ -711,7 +690,7 @@ class FacturaEstadoServicios {
     });
     currentRow += 2;
     const leyendaRow = worksheet.getRow(currentRow);
-    leyendaRow.getCell(1).value = `Generado en Timbrela® el: ${moment().utcOffset('-06:00').format('DD-MM-YYYY HH:mm')} GMT-6`
+    leyendaRow.getCell(1).value = `Generado en Factalys el: ${moment().utcOffset('-06:00').format('DD-MM-YYYY HH:mm')} GMT-6`
     leyendaRow.getCell(1).font = { italic: true, color: { argb: 'FF666666' } };
     leyendaRow.getCell(1).protection = { locked: true };
 
@@ -760,22 +739,16 @@ class FacturaEstadoServicios {
       });
     });
 
-    // ---- Logo SM8 en la esquina superior izquierda ----
-    const logoPath = path.resolve(__dirname, '../assets/logoSM8.png');
-    if (fs.existsSync(logoPath)) {
-      doc.image(logoPath, 40, 20, { width: 100 });
-    }
-
     // ---- Datos de la empresa a la derecha ----
     doc
       .font('Helvetica-Bold')
       .fontSize(11)
       .fillColor('#e60000')
-      .text('Sistemas Multidireccionales', 160, 20)
-      .text('SM8 de Mexico SA de CV', 160)
+      .text('Siste', 160, 20)
+      .text('Sistema de Facturación Electrónica Factalys', 160)
       .fillColor('#000000')
       .font('Helvetica')
-      .text('SMS1505137Y3', 160)
+      .text('XAXX010101000', 160)
       .text('601 - General de Ley Personas Morales', 160)
       .text('Expedición: 06600', 160);
 
@@ -800,7 +773,7 @@ class FacturaEstadoServicios {
     doc
       .fillColor('white')
       .rect(40, 100, 520, 20)
-      .fill('#2A4D69')
+      .fill('#53008c')
       .fillColor('white')
       .font('Helvetica-Bold')
       .fontSize(10)
@@ -817,7 +790,7 @@ class FacturaEstadoServicios {
     doc
       .fillColor('white')
       .rect(40, 170, 520, 20)
-      .fill('#2A4D69')
+      .fill('#53008c')
       .fillColor('white')
       .font('Helvetica-Bold')
       .text('INFORMACIÓN DEL PAGO', 45, 175);
@@ -846,7 +819,7 @@ class FacturaEstadoServicios {
     doc
       .fillColor('white')
       .rect(40, 255, 520, 20)
-      .fill('#2A4D69')
+      .fill('#53008c')
       .fillColor('white')
       .font('Helvetica-Bold')
       .fontSize(10)
@@ -953,11 +926,8 @@ class FacturaEstadoServicios {
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet('Saldos Clientes');
 
-    // 1) Ajuste de columnas para un estilo similar al "Reporte Global":
-    //    A-B para la imagen (fusionadas), C-E para título, F-G para totales,
-    //    y luego la tabla comienza en la fila 5 o 6.
-    sheet.getColumn(1).width = 10;  // Logo (col. A)
-    sheet.getColumn(2).width = 10;  // Logo (col. B)
+    sheet.getColumn(1).width = 10; 
+    sheet.getColumn(2).width = 10;  
     sheet.getColumn(3).width = 25;  // Título/Subtítulo (col. C)
     sheet.getColumn(4).width = 25;  // Título/Subtítulo (col. D)
     sheet.getColumn(5).width = 25;  // Título/Subtítulo (col. E)
@@ -968,7 +938,6 @@ class FacturaEstadoServicios {
     sheet.getRow(1).height = 35;
     sheet.getRow(2).height = 20;
     sheet.getRow(3).height = 20;
-    // Dejamos la fila 4 como separador o para uso futuro
 
     // Borde fino para reutilizar en celdas
     const thinBorder = {
@@ -978,16 +947,8 @@ class FacturaEstadoServicios {
       right: { style: 'thin' },
     };
 
-    // 3) LOGO (A1:B4)
-    const logoPath = path.resolve(__dirname, '../assets/Logo Horizonta con fondo.png');
-    const logoId = workbook.addImage({ filename: logoPath, extension: 'png' });
-    sheet.mergeCells('A1:B2'); // Un bloque alto/rectangular para el logo
-    sheet.addImage(logoId, {
-      tl: { col: 0, row: 0 },
-      // Ajusta según el tamaño real de tu logo
-      ext: { width: 156, height: 100 },
-    });
-
+    sheet.mergeCells('A1:B2'); 
+ 
     // 4) TÍTULO PRINCIPAL (C1:E1)  
     const row1 = sheet.getRow(1);
     row1.values = ['', '', 'REPORTE DE SALDOS DE CLIENTES', '', ''];
@@ -1044,14 +1005,13 @@ class FacturaEstadoServicios {
       cell.fill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: { argb: 'FF2A4D69' }, // Color de fondo
+        fgColor: { argb: '53008c' }, // Color de fondo
       };
       cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
       cell.alignment = { horizontal: 'center' };
     });
 
     // 7) Encabezado de la tabla en fila 5 (p.ej. "Cliente", "Cargos", "Abonos", "Saldo")
-    //    Puedes expandirlo si deseas más columnas.
     const headerRow = sheet.getRow(5);
     headerRow.values = ['Cliente', '', '', '', 'Cargos', 'Abonos', 'Saldo'];
     sheet.mergeCells('A5:D5');
@@ -1061,7 +1021,7 @@ class FacturaEstadoServicios {
       cell.fill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: { argb: 'FF2A4D69' },
+        fgColor: { argb: '53008c' },
       };
       cell.font = { color: { argb: 'FFFFFFFF' }, bold: true };
       cell.alignment = { horizontal: 'center' };
@@ -1102,7 +1062,7 @@ class FacturaEstadoServicios {
 
     // 9) Leyenda final (en fila rowIndex+2, por ejemplo)
     const leyendaRow = sheet.getRow(rowIndex + 2);
-    leyendaRow.getCell(1).value = `Generado en Timbrela® el: ${moment()
+    leyendaRow.getCell(1).value = `Generado en Factalys el: ${moment()
       .local()
       .format('DD-MM-YYYY HH:mm')} GMT-6`;
     leyendaRow.getCell(1).font = { italic: true, color: { argb: 'FF666666' } };
@@ -1170,12 +1130,6 @@ class FacturaEstadoServicios {
     const thinBorder = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
     [40, 18, 15, 15, 15, 18].forEach((w, i) => sheet.getColumn(i + 1).width = w);
   
-    const logoPath = path.resolve(__dirname, '../assets/Logo Horizonta con fondo.png');
-    if (fs.existsSync(logoPath)) {
-      const imgId = workbook.addImage({ filename: logoPath, extension: 'png' });
-      sheet.mergeCells('A1:A3');
-      sheet.addImage(imgId, { tl: { col: 0, row: 0 }, ext: { width: 156, height: 80 } });
-    }
   
     // Título
     sheet.mergeCells('B1:F1');
@@ -1207,7 +1161,7 @@ class FacturaEstadoServicios {
     const headerRow = sheet.getRow(6);
     headerRow.values = ['Nombre (Cliente)', 'Total Vencido', '0-30 Días', '31-60 Días', '61-90 Días', '91 Días o más'];
     headerRow.eachCell(cell => {
-      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF2A4D69' } };
+      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '53008c' } };
       cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
       cell.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
       cell.border = thinBorder;
@@ -1246,7 +1200,7 @@ class FacturaEstadoServicios {
     // Leyenda final
     const leyenda = sheet.getRow(rowIndex + 1);
     sheet.mergeCells(`A${rowIndex + 1}:F${rowIndex + 1}`);
-    leyenda.getCell(1).value = `Generado en Timbrela® el: ${moment().utcOffset('-06:00').format('DD-MM-YYYY HH:mm')} GMT-6`;
+    leyenda.getCell(1).value = `Generado en Factalys el: ${moment().utcOffset('-06:00').format('DD-MM-YYYY HH:mm')} GMT-6`;
     leyenda.getCell(1).font = { italic: true, color: { argb: 'FF666666' } };
   
     return workbook.xlsx.writeBuffer();

@@ -63,10 +63,10 @@ class Authservice {
     }
     const payload = { sub: user.id_usuario };
     const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '15min' });
-    const link = `https://www.timbrela.com/changePassword?token=${token}`;
+    const link = `http://localhost:3000/changePassword?token=${token}`;
     await service.actualizar(token, { recovery_token: token });
     const mail = {
-      from: `"Soporte Timbrela" <${config.email}>`,
+      from: `"Soporte de Factalys" <${config.email}>`,
       to: `${user.email_usuario}`,
       subject: 'Email para recuperar contraseña', //${link}
       html: `<div style="font-family: Arial, Helvetica, sans-serif; background-color: white; padding: 20px; border: 1px solid #ccc;">
@@ -74,7 +74,7 @@ class Authservice {
           Recuperación de contraseña
         </h1>
         <p style="font-size: 16px; line-height: 24px; color: #737373; text-align: center; margin-bottom: 20px;">
-          Hola, te contactamos desde el soporte técnico de Timbrela
+          Hola, te contactamos desde el soporte técnico de Factalys.
         </p>
         <p style="font-size: 16px; line-height: 24px; color: #737373; text-align: center; margin-bottom: 20px;">
           Recientemente solicitó restablecer su contraseña. Haga clic en el botón a continuación para restablecer de forma segura su contraseña y recuperar el acceso a su cuenta.
@@ -85,10 +85,10 @@ class Authservice {
           </a>
         </div>
         <p style="font-size: 16px; line-height: 24px; color: #737373; text-align: center; margin-bottom: 20px;">
-          Si no solicitó un restablecimiento de contraseña, ignore este correo electrónico. Cualquier duda o inquietud no dude en contactarnos a soporte@timbrela.com
+          Si no solicitó un restablecimiento de contraseña, ignore este correo electrónico. Cualquier duda o inquietud no dude en contactarnos
         </p>
         <p style="font-size: 12px; line-height: 16px; color: #737373; text-align: center;">
-          © 2024 Timbrela. All rights reserved.
+          © 2025 Factalys. All rights reserved.
         </p>
       </div>`,
     };

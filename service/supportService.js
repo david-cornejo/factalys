@@ -30,7 +30,7 @@ class SupportService {
           <p><strong>Mensaje:</strong></p>
           <p>${message}</p>
           <p style="font-size: 12px; line-height: 16px; color: #737373; text-align: center;">
-            © 2025 Timbrela. Todos los derechos reservados.
+            © 2025 Factalys. Todos los derechos reservados.
           </p>
         </div>`,
       };

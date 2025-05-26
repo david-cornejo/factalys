@@ -44,9 +44,9 @@ router.post(
 router.post('/logout', async (req, res, next) => {
   try {
     res.clearCookie('authToken', {
-      domain: process.env.COOKIE_DOMAIN, // Coincide con el `domain` de `res.cookie`
-      path: '/', // Coincide con el `path` de `res.cookie`
-      secure: process.env.COOKIE_SECURE, // Asegura que se elimine en HTTPS
+      domain: process.env.COOKIE_DOMAIN, 
+      path: '/', 
+      secure: process.env.COOKIE_SECURE, 
       sameSite: 'None',
     });
 
